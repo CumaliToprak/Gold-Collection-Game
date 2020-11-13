@@ -18,7 +18,7 @@ namespace Altın_Toplama_Oyunu
         List<Coordinate> _altinKonumlari;
 
 
-        public CreateGameBoardFrm(int boardX, int boardY, double altinOrani, List<Coordinate> altinKonumlari) 
+        public CreateGameBoardFrm(int boardX, int boardY, List<Coordinate> altinKonumlari) 
         {
             _boardX = boardX;
             _boardY = boardY;
