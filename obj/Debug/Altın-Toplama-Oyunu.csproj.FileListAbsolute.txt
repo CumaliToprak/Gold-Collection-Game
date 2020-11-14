@@ -8,4 +8,4 @@ C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.cspro
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.exe
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.pdb
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.MainFrm.resources
-C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.CreateGameBoardFrm.resources
+C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.PlayGameFrm.resources

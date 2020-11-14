@@ -1,6 +1,6 @@
 ﻿namespace Altın_Toplama_Oyunu
 {
-    partial class CreateGameBoardFrm
+    partial class PlayGameFrm
     {
         /// <summary>
         /// Required designer variable.
@@ -40,7 +40,7 @@
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 0;
             // 
-            // frmCreateBoard
+            // CreateGameBoardFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -49,11 +49,12 @@
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmCreateBoard";
+            this.Name = "CreateGameBoardFrm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmCreateBoard";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.CreateGameBoardFrm_Load);
             this.ResumeLayout(false);
 
         }

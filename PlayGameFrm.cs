@@ -11,14 +11,18 @@ using System.Windows.Forms;
 
 namespace Altın_Toplama_Oyunu
 {
-    public partial class CreateGameBoardFrm : Form
+    public partial class PlayGameFrm : Form
     {
         int _boardX, _boardY;
         int X, Y;
         List<Coordinate> _altinKonumlari;
 
+        private void CreateGameBoardFrm_Load(object sender, EventArgs e)
+        {
 
-        public CreateGameBoardFrm(int boardX, int boardY, List<Coordinate> altinKonumlari) 
+        }
+
+        public PlayGameFrm(int boardX, int boardY, List<Coordinate> altinKonumlari) 
         {
             _boardX = boardX;
             _boardY = boardY;
@@ -55,6 +59,7 @@ namespace Altın_Toplama_Oyunu
 
                     };
 
+                    //Oyuncuları gösteren konumları belirleme ve ui kısmında görüntüleme
                     if (n == 0 && m == 0)
                     {
                         newLabel.Text = "A ";
@@ -102,7 +107,7 @@ namespace Altın_Toplama_Oyunu
                         tmp = rnd.Next(1, 5);
                         tmp = rnd.Next(1, 5);
 
-
+                        //altın değerlerini atama işlemi
                         switch (tmp)
                         {
                             case 1:

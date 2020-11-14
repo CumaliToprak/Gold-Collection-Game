@@ -9,10 +9,10 @@ namespace Altın_Toplama_Oyunu
 {
     class StartGame
     {
-        CreateGameBoardFrm createBoard;
+        PlayGameFrm createBoard;
 
         int _boardX, _boardY;
-        double _altinOrani, _gizliAltinOrani = 10;
+        double _altinOrani, _gizliAltinOrani ;
         public StartGame(int boardX, int boardY, double altinOrani, double gizliAltinOrani)
         {
             _boardX = boardX;
@@ -25,7 +25,7 @@ namespace Altın_Toplama_Oyunu
         {
             List<Coordinate> altinKonumlari = altınKareleriBul(_boardX, _boardY, _altinOrani);
 
-            createBoard = new CreateGameBoardFrm(_boardX, _boardY, _altinOrani, altinKonumlari);
+            createBoard = new PlayGameFrm(_boardX, _boardY, altinKonumlari);
 
             createBoard.create();
 
@@ -64,8 +64,6 @@ namespace Altın_Toplama_Oyunu
         public List<Coordinate> gizliAltinlariBelirle(List<Coordinate> altınKonumları, double oran)
         {
             int gizliAltinSayisi = Convert.ToInt32(altınKonumları.Count * oran / 100);
-            Console.WriteLine($"altın sayısı {gizliAltinSayisi}");
-
             int temp = 0;
             Random rnd = new Random();
 
