@@ -9,10 +9,19 @@ namespace Altın_Toplama_Oyunu
 {
     class StartGame
     {
+<<<<<<< HEAD
         PlayGameFrm createBoard;
 
         int _boardX, _boardY;
         double _altinOrani, _gizliAltinOrani ;
+=======
+        CreateGameBoardFrm createBoard;
+        List<Coordinate> goldenList;
+
+        int _boardX, _boardY;
+        double _altinOrani, _gizliAltinOrani = 10;
+        int _altınSayisi;
+>>>>>>> refs/remotes/origin2/main
         public StartGame(int boardX, int boardY, double altinOrani, double gizliAltinOrani)
         {
             _boardX = boardX;
@@ -25,9 +34,15 @@ namespace Altın_Toplama_Oyunu
         {
             List<Coordinate> altinKonumlari = altınKareleriBul(_boardX, _boardY, _altinOrani);
 
+<<<<<<< HEAD
             createBoard = new PlayGameFrm(_boardX, _boardY, altinKonumlari);
+=======
+            createBoard = new CreateGameBoardFrm(_boardX, _boardY, altinKonumlari);
+>>>>>>> refs/remotes/origin2/main
 
             createBoard.create();
+            GamerA gamerA = new GamerA(_altınSayisi,5,3,5,goldenList);
+            gamerA.hedefBelirle();
 
         }
 
@@ -35,16 +50,16 @@ namespace Altın_Toplama_Oyunu
         public List<Coordinate> altınKareleriBul(int boardX, int boardY, double altinOrani)
         {
             int kareSayisi = boardX * boardY;
-            int altınSayisi = Convert.ToInt32((kareSayisi * altinOrani) / 100);
+             _altınSayisi = Convert.ToInt32((kareSayisi * altinOrani) / 100);
             
             //altınlarımızın konum bilgilerini tutacak liste.
-            List<Coordinate> goldenList = new List<Coordinate>();
+             goldenList = new List<Coordinate>();
 
             int x,y;
             int temp = 0;
             Random rnd = new Random();
 
-            while (temp < altınSayisi)
+            while (temp < _altınSayisi)
             {
                 x = rnd.Next(0, boardX);
                 y = rnd.Next(0, boardY);

@@ -104,8 +104,6 @@ namespace Altın_Toplama_Oyunu
                         Random rnd = new Random();
                         int tmp;
                         tmp = rnd.Next(1, 5);
-                        tmp = rnd.Next(1, 5);
-                        tmp = rnd.Next(1, 5);
 
                         //altın değerlerini atama işlemi
                         switch (tmp)
