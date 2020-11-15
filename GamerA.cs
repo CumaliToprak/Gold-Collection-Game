@@ -9,15 +9,23 @@ namespace Altın_Toplama_Oyunu
     class GamerA : Gamer
     {
         public GamerA(int altinMiktari, int seferMaaliyeti,
-            int adimMiktari, int hedefBelirlemeMaaliyeti, List<Coordinate> altinKordinatlari) :
-            base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, altinKordinatlari)
+            int adimMiktari, int hedefBelirlemeMaaliyeti,int hamleYapmaMaaliyeti ,List<Coordinate> altinKordinatlari) :
+            base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti, altinKordinatlari)
         {
             // A oyuncusunun baslangictaki yeri ataniyor.
             anlikYer = new Coordinate();
             anlikYer.X = 0;
             anlikYer.Y = 0; 
         }
-        
+        //public override bool hedefeIlerle()
+        //{
+        //    if (hedefBelirliMi== false)
+        //    {
+        //        hedefBelirle();
+        //        return hedefeIlerle(); 
+        //    }
+            
+        //}
         public override void hedefBelirle()
         {
             int enYakinAltinMesafesi = int.MaxValue;
@@ -28,14 +36,17 @@ namespace Altın_Toplama_Oyunu
                 // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
                 hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
                 // her seferde en yakin kordinata ulasiliyor.
-                if (!kordinat.gizliMi &&enYakinAltinMesafesi > hesaplananUzaklik )
+                if (!kordinat.gizliMi && enYakinAltinMesafesi > hesaplananUzaklik )
                 {
                     enYakinAltinMesafesi = hesaplananUzaklik;
                     enYakinKordinat = kordinat; 
                 }
             }
+            altinMiktari -= hedefBelirlemeMaaliyeti; // hedef belirleme maaliyeti sahip oldugumuz altindan dusuluyor. 
+            harcananAltinMiktari += hedefBelirlemeMaaliyeti; 
             hedeflenenYer = enYakinKordinat; // hedeflenen yer en yakin kordinat oluyor.
-            Console.WriteLine("A oyuncusunun hedefi"+hedeflenenYer.X + "," + hedeflenenYer.Y);
+            hedefBelirliMi = true;
+            Console.WriteLine("Hedef Belirlendi : A oyuncusunun hedefi"+hedeflenenYer.X + "," + hedeflenenYer.Y);
 
         }
     }
