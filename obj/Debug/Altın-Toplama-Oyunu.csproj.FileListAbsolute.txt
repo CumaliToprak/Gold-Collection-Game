@@ -1,26 +1,10 @@
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\bin\Debug\Altın-Toplama-Oyunu.exe.config
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\bin\Debug\Altın-Toplama-Oyunu.exe
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\bin\Debug\Altın-Toplama-Oyunu.pdb
-C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.csprojAssemblyReference.cache
+C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.MainFrm.resources
+C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.PlayGameFrm.resources
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.Properties.Resources.resources
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.csproj.GenerateResource.cache
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.csproj.CoreCompileInputs.cache
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.exe
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.pdb
-C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.MainFrm.resources
-<<<<<<< HEAD
-C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.PlayGameFrm.resources
-=======
-C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın_Toplama_Oyunu.CreateGameBoardFrm.resources
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın_Toplama_Oyunu.MainFrm.resources
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın_Toplama_Oyunu.CreateGameBoardFrm.resources
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın_Toplama_Oyunu.Properties.Resources.resources
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csproj.GenerateResource.cache
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csproj.CoreCompileInputs.cache
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.exe
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.pdb
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\bin\Debug\Altın-Toplama-Oyunu.exe.config
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\bin\Debug\Altın-Toplama-Oyunu.exe
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\bin\Debug\Altın-Toplama-Oyunu.pdb
-C:\Users\berkayEfe\source\repos\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csprojAssemblyReference.cache
->>>>>>> refs/remotes/origin2/main

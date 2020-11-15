@@ -13,22 +13,23 @@ namespace Altın_Toplama_Oyunu
 {
     public partial class PlayGameFrm : Form
     {
-        int _boardX, _boardY;
-        int X, Y;
-        List<Coordinate> _altinKonumlari;
-
+        readonly int _boardX, _boardY;
+        readonly int X, Y;
+        List<Coordinate> _acikAltinKonumlari;
+        List<Coordinate> _gizliAltinKonumlari;
         private void CreateGameBoardFrm_Load(object sender, EventArgs e)
         {
 
         }
 
-        public PlayGameFrm(int boardX, int boardY, List<Coordinate> altinKonumlari) 
+        public PlayGameFrm(int boardX, int boardY, List<Coordinate> acikAltinKonumlari, List<Coordinate> gizliAltinKonumlari) 
         {
             _boardX = boardX;
             _boardY = boardY;
              X = (77 - boardX) * 10; //Game board form boyutuna göre ne kadar sağdan konumlanmaya başlamalı
              Y = (40 - boardY) * 10; //Game Board form boyutuna göre ne kadar aşağıdan konumlanmaya başlamalı
-            _altinKonumlari = altinKonumlari;
+            _acikAltinKonumlari = acikAltinKonumlari;
+            _gizliAltinKonumlari = gizliAltinKonumlari;
         }
 
 
@@ -93,13 +94,13 @@ namespace Altın_Toplama_Oyunu
 
 
 
-                    int index = _altinKonumlari.FindIndex(p => p.X == n && p.Y == m);
-
+                    int index_acikAltinMi = _acikAltinKonumlari.FindIndex(p => p.X == n && p.Y == m);
+                    int index_gizliAltinMi = _gizliAltinKonumlari.FindIndex(p => p.X == n && p.Y == m);
                     //Altınları: sarı, gizli altınlar: kırmızı
-                    if (index > 0)
+                    if (index_acikAltinMi >= 0 || index_gizliAltinMi >= 0 )
                     {
-                        var altin = _altinKonumlari[index];
 
+                        int altinDegeri=0;
                         //altın değerlerini atamak için random index uretimi
                         Random rnd = new Random();
                         int tmp;
@@ -109,29 +110,33 @@ namespace Altın_Toplama_Oyunu
                         switch (tmp)
                         {
                             case 1:
-                                altin.AltınDegeri = 5;
+                                altinDegeri = 5;
                                 break;
                             case 2:
-                                altin.AltınDegeri = 10;
+                                altinDegeri = 10;
                                 break;
                             case 3:
-                                altin.AltınDegeri = 15;
+                                altinDegeri = 15;
                                 break;
                             case 4:
-                                altin.AltınDegeri = 20;
+                                altinDegeri = 20;
                                 break;
                         }
 
                         // altın konumlarını ve diğer blokları renklendirme
-                        if (altin.gizliMi == true)
+                        if (index_gizliAltinMi >= 0)
                         {
+                            var altin = _gizliAltinKonumlari[index_gizliAltinMi];
+                            altin.AltınDegeri = altinDegeri;
                             newLabel.BackColor = clr2;
                             _boardLabels[altin.X, altin.Y].Text = "? ";
                         }
                         else
                         {
+                            var altin = _acikAltinKonumlari[index_acikAltinMi];
+                            altin.AltınDegeri = altinDegeri;
                             newLabel.BackColor = clr1;
-                            _boardLabels[altin.X, altin.Y].Text = altin.AltınDegeri.ToString();
+                            _boardLabels[altin.X, altin.Y].Text = altinDegeri.ToString();
                         }
                     }
 
