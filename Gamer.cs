@@ -10,7 +10,7 @@ using System.Xml.Schema;
 namespace Altın_Toplama_Oyunu
 {
 
-    abstract class Gamer
+    public abstract class Gamer
     {
         public int altinMiktari { set; get; }
         public Coordinate hedeflenenYer { set; get; }
@@ -69,8 +69,8 @@ namespace Altın_Toplama_Oyunu
                 Coordinate coordinate = gizliAltinListesi[i];
                 var coordinateX = coordinate.X;
                 var coordinateY = coordinate.Y;
-               // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
-                if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY,coordinate))
+                // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
+                if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY, coordinate))
                 {
                     gizliAltinListesi.Remove(coordinate);
                     acikAltinListesi.Add(coordinate);
@@ -98,7 +98,7 @@ namespace Altın_Toplama_Oyunu
             StartGame.createBoard.tahtadaVerilenKonumaGit(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY);
 
             if (hedeflenenYerdeAltinVarMi())
-            {                
+            {
                 if (hedefeVardiMi())
                 {
                     hedeftekiAltiniAl();
@@ -114,7 +114,7 @@ namespace Altın_Toplama_Oyunu
                 hedefBelirle();
                 hedefeIlerle();
             }
-        
+
 
 
 
@@ -187,9 +187,9 @@ namespace Altın_Toplama_Oyunu
             hedeflenenYer = enKarliKordinat; // hedeflenen yer en yakin kordinat oluyor.
             hedefBelirliMi = true;
         }
-        private bool coordinatAraliktaMi(int gecmisYerX, int gecmisYerY, int simdikiYerX, int  simdikiYerY, Coordinate sorgulanan)
+        private bool coordinatAraliktaMi(int gecmisYerX, int gecmisYerY, int simdikiYerX, int simdikiYerY, Coordinate sorgulanan)
         {
-           
+
             var coordinateX = sorgulanan.X;
             var coordinateY = sorgulanan.Y;
             if ((((gecmisYerX < coordinateX && coordinateX < simdikiYerX) ||
