@@ -151,8 +151,12 @@ namespace Altın_Toplama_Oyunu
 
         }
 
+        private void PlayGameFrm_Load(object sender, EventArgs e)
+        {
 
-        public  void tahtadaVerilenKonumaGit(int  anlikYerX, int anlikYerY,int gidilecekYerX, int gidilecekYerY)
+        }
+
+        public void tahtadaVerilenKonumaGit(int  anlikYerX, int anlikYerY,int gidilecekYerX, int gidilecekYerY)
         {
             // anlik yerden gidilecek yere stringi tasir.
             string temp = _boardLabels[anlikYerX, anlikYerY].Text;

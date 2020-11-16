@@ -79,8 +79,10 @@ namespace Altın_Toplama_Oyunu
         public void startCompetetion()
         {
             GamerA gamerA = new GamerA(200, 5, 3, 5, 5);
+            GamerB gamerB = new GamerB(200, 5, 3, 5, 5);
             GamerC gamerC = new GamerC(200, 5, 3, 5, 5);
             oyuncularListesi.Add(gamerA);
+            oyuncularListesi.Add(gamerB);
             oyuncularListesi.Add(gamerC);
 
             while (acikAltinKonumlari.Count > 0)
