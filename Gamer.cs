@@ -20,30 +20,35 @@ namespace Altın_Toplama_Oyunu
         public int hedefBelirlemeMaaliyeti { set; get; }
         public string oyuncuAdi;
         public int toplananAltinMiktari;
-        public int harcananAltinMiktari; 
+        public int harcananAltinMiktari;
         public bool hedefBelirliMi { set; get; }
         private int atilabilirAdimMiktari;
         public int hamleYapmaMaaliyeti { set; get; }// hedefe ilerlerken harcanacak altin miktari 
-        public List<Coordinate> altinListesi;
-
-        public Gamer(int altinMiktari, int seferMaaliyeti, int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti, List<Coordinate> altinListesi)
+        public List<Coordinate> gizliAltinListesi;
+        public List<Coordinate> acikAltinListesi;
+        public Gamer(int altinMiktari, int seferMaaliyeti, int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti)
         {
             this.altinMiktari = altinMiktari;
             this.seferMaaliyeti = seferMaaliyeti;
             this.adimMiktari = adimMiktari;
             this.hedefBelirlemeMaaliyeti = hedefBelirlemeMaaliyeti;
-            this.altinListesi = altinListesi;
+
             this.hamleYapmaMaaliyeti = hamleYapmaMaaliyeti;
             this.hedefBelirliMi = false;
             toplananAltinMiktari = 0;
-            harcananAltinMiktari = 0; 
+            harcananAltinMiktari = 0;
+            acikAltinListesi = StartGame.acikAltinKonumlari;
+
+            gizliAltinListesi = StartGame.gizliAltinKonumlari;
         }
 
         public abstract void hedefBelirle();
 
         public void hedefeIlerle()
         {
-           
+            int gecmisYerX = anlikYer.X;
+            int gecmisYerY = anlikYer.Y;
+
             int calculatedValueX = Math.Abs(hedeflenenYer.X - anlikYer.X);
             int calculatedValueY = Math.Abs(hedeflenenYer.Y - anlikYer.Y);
             int shiftingAmountForX = calculatedValueX > atilabilirAdimMiktari ? atilabilirAdimMiktari : calculatedValueX;
@@ -55,39 +60,70 @@ namespace Altın_Toplama_Oyunu
             altinMiktari -= hamleYapmaMaaliyeti;
             harcananAltinMiktari += hamleYapmaMaaliyeti;
             Console.WriteLine("Hedefe ilerlendi : " + anlikYer.X + "," + anlikYer.Y + " - " + hedeflenenYer.X + "," + hedeflenenYer.Y);
-            
+            int simdikiYerX = anlikYer.X;
+            int simdikiYerY = anlikYer.Y;
 
-            if (hedefeVardiMi())
+            for (int i = 0; i < gizliAltinListesi.Count; i++)
             {
-                if (hedeflenenYerdeAltinVarMi())
+                Coordinate coordinate = gizliAltinListesi[i];
+                var coordinateX = coordinate.X;
+                var coordinateY = coordinate.Y;
+               // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
+                if ( ( ((gecmisYerX < coordinateX && coordinateX < simdikiYerX) ||
+                (gecmisYerX > coordinateX && coordinateX > simdikiYerX)) && gecmisYerY== coordinateY && simdikiYerY==coordinateY) ||
+                (((gecmisYerY < coordinateY && coordinateY < simdikiYerY) ||
+                (gecmisYerY > coordinateY && coordinateY > simdikiYerY)) && gecmisYerX == coordinateX && simdikiYerX == coordinateX))
+                {
+                    gizliAltinListesi.Remove(coordinate);
+                    acikAltinListesi.Add(coordinate);
+                    StartGame.createBoard.gizliAltiniAcigaCikar(coordinate);
+                }
+
+            }
+            StartGame.createBoard.tahtadaVerilenKonumaGit(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY);
+
+            if (hedeflenenYerdeAltinVarMi())
+            {                
+                if (hedefeVardiMi())
                 {
                     hedeftekiAltiniAl();
                 }
-               if(atilabilirAdimMiktari > 0 && altinListesi.Count > 0) // eger atabilecegi adim sayi kalmissa hedef belirler ve hedefe ilerler.
-                {
-                    hedefBelirle();
-                    hedefeIlerle();
-                }
+                //if(atilabilirAdimMiktari > 0 && acikAltinListesi.Count > 0) // eger atabilecegi adim sayi kalmissa hedef belirler ve hedefe ilerler.
+                //{
+                //     hedefBelirle();
+                //   hedefeIlerle();
+                // }
             }
-           
+            else
+            {
+                hedefBelirle();
+                hedefeIlerle();
+            }
+        
+
 
 
         }
         public void hamleYap()
         { // bir hamlede adimMiktari kadar hareket edilir. 
             atilabilirAdimMiktari = adimMiktari;
-            Console.WriteLine("Hamle basladi");
+            var bulundugumKonum = anlikYer;
+            Console.WriteLine("Hamle basladi : " + bulundugumKonum.X + "," + bulundugumKonum.Y);
             if (hedefBelirliMi == true && !hedefeVardiMi())
             {
                 hedefeIlerle();
             }
-           
+
             else
             {
 
                 hedefBelirle();
                 hedefeIlerle();
             }
+            var vardigimYer = anlikYer;
+            Console.WriteLine(vardigimYer.X + "," + vardigimYer.Y + "\n\n");
+
+
         }
         public int uzaklikHesapla(Coordinate anlikKordinat, Coordinate adayHedefKordinat)
         {
@@ -100,16 +136,16 @@ namespace Altın_Toplama_Oyunu
         }
         private bool hedeflenenYerdeAltinVarMi()
         {
-            return altinListesi.Contains(hedeflenenYer);
+            return acikAltinListesi.Contains(hedeflenenYer);
         }
         private void hedeftekiAltiniAl()
         {
             altinMiktari += hedeflenenYer.AltınDegeri;
-            toplananAltinMiktari = +hedeflenenYer.AltınDegeri; 
+            toplananAltinMiktari = +hedeflenenYer.AltınDegeri;
             hedeflenenYer.AltınDegeri = 0;
             hedefBelirliMi = false;
-            altinListesi.Remove(hedeflenenYer); // hedeflenen deger altin listesinden cikarildi
-            
+            acikAltinListesi.Remove(hedeflenenYer); // hedeflenen deger altin listesinden cikarildi
+
             Console.WriteLine("Hedefteki alindi");
         }
     }

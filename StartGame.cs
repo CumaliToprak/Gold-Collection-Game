@@ -9,12 +9,13 @@ namespace Altın_Toplama_Oyunu
 {
     class StartGame
     {
-        PlayGameFrm createBoard;
+        public static PlayGameFrm createBoard { get; set; }
 
-        List<Coordinate> gizliAltinKonumlari;
-        List<Coordinate> acikAltinKonumlari;
+        static public List<Coordinate> gizliAltinKonumlari { set; get; }
+        static public List<Coordinate> acikAltinKonumlari { set; get; }
+        private List<Gamer> oyuncularListesi;
 
-        int _boardX, _boardY;
+        public static int _boardX, _boardY;
         double _altinOrani, _gizliAltinOrani;
         int _altinSayisi;
 
@@ -24,6 +25,7 @@ namespace Altın_Toplama_Oyunu
             _boardY = boardY;
             _altinOrani = altinOrani;
             _gizliAltinOrani = gizliAltinOrani;
+            oyuncularListesi = new List<Gamer>();
         }
 
         internal void createGameBoard()
@@ -34,13 +36,12 @@ namespace Altın_Toplama_Oyunu
             int acikAltinSayisi = _altinSayisi - gizliAltinSayisi;
 
             gizliAltinKonumlari = altinKonumlariniBelirle(gizliAltinSayisi, false);
-            acikAltinKonumlari  = altinKonumlariniBelirle(acikAltinSayisi, true);
+            acikAltinKonumlari = altinKonumlariniBelirle(acikAltinSayisi, true);
 
             createBoard = new PlayGameFrm(_boardX, _boardY, acikAltinKonumlari, gizliAltinKonumlari);
 
             createBoard.create();
-            //GamerA gamerA = new GamerA(_altinSayisi, 5, 3, 5, altinKonumlari);
-            //gamerA.hedefBelirle();
+            startCompetetion();
 
         }
 
@@ -57,7 +58,7 @@ namespace Altın_Toplama_Oyunu
 
             while (temp < altinSayisi)
             {
-                x = rnd.Next(0, _boardX);  
+                x = rnd.Next(0, _boardX);
                 y = rnd.Next(0, _boardY);
                 //eğer random sayılar oyuncuların konumuna gelecekse bir sonraki çevrime gir
                 if ((x == 0 && y == 0) || (x == 0 && y == _boardY - 1) || (x == _boardX - 1 && y == 0) || (x == _boardX - 1 && y == _boardY - 1)) continue;
@@ -74,6 +75,24 @@ namespace Altın_Toplama_Oyunu
             }
 
             return altinKonumlari;
+        }
+        public void startCompetetion()
+        {
+            GamerA gamerA = new GamerA(200, 5, 3, 5, 5);
+            GamerC gamerC = new GamerC(200, 5, 3, 5, 5);
+            oyuncularListesi.Add(gamerA);
+            oyuncularListesi.Add(gamerC);
+
+            while (acikAltinKonumlari.Count > 0)
+            {
+
+                foreach (Gamer gamer in oyuncularListesi)
+                {
+                    //Console.WriteLine("altinKonumari:" + acikAltinKonumlari.Count);
+                    gamer.hamleYap();
+                    Thread.Sleep(5000);
+                }
+            }
         }
 
 

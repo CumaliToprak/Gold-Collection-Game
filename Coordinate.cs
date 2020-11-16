@@ -12,5 +12,10 @@ namespace Altın_Toplama_Oyunu
         public int Y { get; set; }
         public int AltınDegeri { get; set; }
         public bool gizliMi { get; set; }
+        public override string ToString()
+        {
+            return "X:" + X.ToString() + " Y:" + Y.ToString(); 
+        }
     }
 }
+   

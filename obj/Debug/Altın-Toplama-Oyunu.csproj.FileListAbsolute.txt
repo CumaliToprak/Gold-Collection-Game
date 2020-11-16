@@ -8,3 +8,14 @@ C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.cspro
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.csproj.CoreCompileInputs.cache
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.exe
 C:\Users\cumal\Desktop\Altın-Toplama-Oyunu\obj\Debug\Altın-Toplama-Oyunu.pdb
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\bin\Debug\Altın-Toplama-Oyunu.exe.config
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\bin\Debug\Altın-Toplama-Oyunu.exe
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\bin\Debug\Altın-Toplama-Oyunu.pdb
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csprojAssemblyReference.cache
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın_Toplama_Oyunu.MainFrm.resources
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın_Toplama_Oyunu.PlayGameFrm.resources
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın_Toplama_Oyunu.Properties.Resources.resources
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csproj.GenerateResource.cache
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csproj.CoreCompileInputs.cache
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.exe
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.pdb

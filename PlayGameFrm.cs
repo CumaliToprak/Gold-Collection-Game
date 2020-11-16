@@ -15,19 +15,23 @@ namespace Altın_Toplama_Oyunu
     {
         readonly int _boardX, _boardY;
         readonly int X, Y;
+         Label[,] _boardLabels;
         List<Coordinate> _acikAltinKonumlari;
         List<Coordinate> _gizliAltinKonumlari;
+         Color clr1 = Color.Gold;
+         Color  clr2 = Color.Red;
+         Color clr3 = Color.DarkGray;
         private void CreateGameBoardFrm_Load(object sender, EventArgs e)
         {
 
         }
 
-        public PlayGameFrm(int boardX, int boardY, List<Coordinate> acikAltinKonumlari, List<Coordinate> gizliAltinKonumlari) 
+        public PlayGameFrm(int boardX, int boardY, List<Coordinate> acikAltinKonumlari, List<Coordinate> gizliAltinKonumlari)
         {
             _boardX = boardX;
             _boardY = boardY;
-             X = (77 - boardX) * 10; //Game board form boyutuna göre ne kadar sağdan konumlanmaya başlamalı
-             Y = (40 - boardY) * 10; //Game Board form boyutuna göre ne kadar aşağıdan konumlanmaya başlamalı
+            X = (77 - boardX) * 10; //Game board form boyutuna göre ne kadar sağdan konumlanmaya başlamalı
+            Y = (40 - boardY) * 10; //Game Board form boyutuna göre ne kadar aşağıdan konumlanmaya başlamalı
             _acikAltinKonumlari = acikAltinKonumlari;
             _gizliAltinKonumlari = gizliAltinKonumlari;
         }
@@ -38,11 +42,9 @@ namespace Altın_Toplama_Oyunu
 
             const int boyut = 20;
 
-            var clr1 = Color.Gold;
-            var clr2 = Color.Red;
-            var clr3 = Color.DarkGray;
 
-            Label[,] _boardLabels = new Label[_boardX, _boardY]; ; //label array
+
+            _boardLabels = new Label[_boardX, _boardY]; ; //label array
 
             for (var n = 0; n < _boardX; n++)
             {
@@ -97,10 +99,10 @@ namespace Altın_Toplama_Oyunu
                     int index_acikAltinMi = _acikAltinKonumlari.FindIndex(p => p.X == n && p.Y == m);
                     int index_gizliAltinMi = _gizliAltinKonumlari.FindIndex(p => p.X == n && p.Y == m);
                     //Altınları: sarı, gizli altınlar: kırmızı
-                    if (index_acikAltinMi >= 0 || index_gizliAltinMi >= 0 )
+                    if (index_acikAltinMi >= 0 || index_gizliAltinMi >= 0)
                     {
 
-                        int altinDegeri=0;
+                        int altinDegeri = 0;
                         //altın değerlerini atamak için random index uretimi
                         Random rnd = new Random();
                         int tmp;
@@ -139,17 +141,54 @@ namespace Altın_Toplama_Oyunu
                             _boardLabels[altin.X, altin.Y].Text = altinDegeri.ToString();
                         }
                     }
-
-
-
-
-
+                   
                 }
             }
 
 
             this.WindowState = FormWindowState.Maximized;
             Show();
+
+        }
+
+
+        public  void tahtadaVerilenKonumaGit(int  anlikYerX, int anlikYerY,int gidilecekYerX, int gidilecekYerY)
+        {
+            // anlik yerden gidilecek yere stringi tasir.
+            string temp = _boardLabels[anlikYerX, anlikYerY].Text;
+            Color tempBackColor = _boardLabels[anlikYerX, anlikYerY].BackColor;
+            Label label1 = _boardLabels[anlikYerX, anlikYerY];
+            Label label2 = _boardLabels[gidilecekYerX, gidilecekYerY];
+            Console.WriteLine(anlikYerX);
+            Console.WriteLine(gidilecekYerX);
+           
+            
+            label1.Text = $"| |";
+            label1.BackColor = clr3; // arka plan darkGray Oluyor.
+            label2.Text = temp;
+            label2.BackColor = tempBackColor;
+            Controls.Add(label1);
+            Controls.Add(label2);
+           
+            Show(); 
+            this.Refresh();// ekran yenileniyor...
+
+
+        }
+        public void gizliAltiniAcigaCikar(Coordinate kordinat)
+        {
+            int X  =kordinat.X;
+            int Y = kordinat.Y;
+            Label label = _boardLabels[X, Y];
+            label.Text = kordinat.AltınDegeri.ToString();
+            label.BackColor = clr1;
+
+            Controls.Add(label);
+           
+
+            Show();
+            this.Refresh();// ekran yenileniyor...
+
 
         }
 

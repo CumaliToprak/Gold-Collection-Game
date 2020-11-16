@@ -9,8 +9,8 @@ namespace Altın_Toplama_Oyunu
     class GamerA : Gamer
     {
         public GamerA(int altinMiktari, int seferMaaliyeti,
-            int adimMiktari, int hedefBelirlemeMaaliyeti,int hamleYapmaMaaliyeti ,List<Coordinate> altinKordinatlari) :
-            base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti, altinKordinatlari)
+            int adimMiktari, int hedefBelirlemeMaaliyeti,int hamleYapmaMaaliyeti ) :
+            base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
         {
             // A oyuncusunun baslangictaki yeri ataniyor.
             anlikYer = new Coordinate();
@@ -31,12 +31,12 @@ namespace Altın_Toplama_Oyunu
             int enYakinAltinMesafesi = int.MaxValue;
             int hesaplananUzaklik;
             Coordinate enYakinKordinat = null ; 
-            foreach (Coordinate kordinat in altinListesi)
+            foreach (Coordinate kordinat in acikAltinListesi)
             {
                 // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
                 hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
                 // her seferde en yakin kordinata ulasiliyor.
-                if (!kordinat.gizliMi && enYakinAltinMesafesi > hesaplananUzaklik )
+                if (enYakinAltinMesafesi > hesaplananUzaklik )
                 {
                     enYakinAltinMesafesi = hesaplananUzaklik;
                     enYakinKordinat = kordinat; 
