@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Gamer.cs" />
     <Compile Include="GamerA.cs" />
+    <Compile Include="GamerB.cs" />
     <Compile Include="GamerC.cs" />
     <Compile Include="MainFrm.cs">
       <SubType>Form</SubType>
