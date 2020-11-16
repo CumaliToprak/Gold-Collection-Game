@@ -11,9 +11,9 @@ namespace Altın_Toplama_Oyunu
         public GamerB(int altinMiktari, int seferMaaliyeti, int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti)
             : base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
         {
-            // B oyuncusunun baslangictaki yeri ataniyor.
+            // C oyuncusunun baslangictaki yeri ataniyor.
             anlikYer = new Coordinate();
-            anlikYer.X = 0;
+            anlikYer.X = StartGame._boardX-1;
             anlikYer.Y = 0;
         }
 
