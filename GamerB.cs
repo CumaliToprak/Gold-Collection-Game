@@ -19,26 +19,7 @@ namespace Altın_Toplama_Oyunu
 
         public override void hedefBelirle()
         {
-            double hesaplananUzaklik;
-            double maliyet;
-            double karTutari = 0;
-            Coordinate enKarliKordinat = null;
-            foreach (Coordinate kordinat in acikAltinListesi)
-            {
-                // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
-                hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
-                maliyet = (hesaplananUzaklik / 3) * hamleYapmaMaaliyeti;
-                if ((kordinat.AltınDegeri - Convert.ToInt32( maliyet ) ) > karTutari)
-                {
-                    karTutari = (kordinat.AltınDegeri - maliyet);
-                    enKarliKordinat = kordinat;
-                }
-
-            }
-            altinMiktari -= hedefBelirlemeMaaliyeti; // hedef belirleme maaliyeti sahip oldugumuz altindan dusuluyor. 
-            harcananAltinMiktari += hedefBelirlemeMaaliyeti;
-            hedeflenenYer = enKarliKordinat; // hedeflenen yer en yakin kordinat oluyor.
-            hedefBelirliMi = true;
+            enKarliAltiniAl();
             Console.WriteLine("Hedef Belirlendi : B oyuncusunun hedefi" + hedeflenenYer.X + "," + hedeflenenYer.Y);
 
         }

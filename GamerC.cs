@@ -8,40 +8,22 @@ namespace Altın_Toplama_Oyunu
 {
     class GamerC : Gamer
     {
+        private int herHamledeAcilacakGA;
         public GamerC(int altinMiktari, int seferMaaliyeti,
-            int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti) :
+            int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti,int herHamledeAcilacakGA) :
             base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
         {
             // C oyuncusunun baslangictaki yeri ataniyor.
+            this.herHamledeAcilacakGA = herHamledeAcilacakGA;
             anlikYer = new Coordinate();
             anlikYer.Y = StartGame._boardY-1;
             anlikYer.X = StartGame._boardX - 1;
         }
         public override void hedefBelirle()
         {
-            gizliAltiniAcigaCikar(1);
+            gizliAltiniAcigaCikar(herHamledeAcilacakGA);
 
-            int enYakinAltinMesafesi = int.MaxValue;
-            int hesaplananUzaklik;
-            Coordinate enYakinKordinat = null;
-            foreach (Coordinate kordinat in acikAltinListesi)
-            {
-                // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
-                hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
-                // her seferde en yakin kordinata ulasiliyor.
-                if (enYakinAltinMesafesi > hesaplananUzaklik)
-                {
-                    enYakinAltinMesafesi = hesaplananUzaklik;
-                    enYakinKordinat = kordinat;
-                }
-            }
-            altinMiktari -= hedefBelirlemeMaaliyeti; // hedef belirleme maaliyeti sahip oldugumuz altindan dusuluyor. 
-            harcananAltinMiktari += hedefBelirlemeMaaliyeti;
-            hedeflenenYer =enYakinKordinat ;
-            //hedeflenenYer.X = 0;
-            //hedeflenenYer.Y = 0;
-            // hedeflenen yer en yakin kordinat oluyor.
-            hedefBelirliMi = true;
+            enKarliAltiniAl(); // en karli altini aliyoruz.
 
         }
         

@@ -29,3 +29,4 @@ C:\Users\cumal\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csproj.Generate
 C:\Users\cumal\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.csproj.CoreCompileInputs.cache
 C:\Users\cumal\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.exe
 C:\Users\cumal\Desktop\Yazlab-1.1\obj\Debug\Altın-Toplama-Oyunu.pdb
+C:\Users\berkayEfe\Desktop\Yazlab-1.1\obj\Debug\Altın_Toplama_Oyunu.EndOfGameFrm.resources

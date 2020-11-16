@@ -80,7 +80,7 @@ namespace Altın_Toplama_Oyunu
         {
             GamerA gamerA = new GamerA(200, 5, 3, 5, 5);
             GamerB gamerB = new GamerB(200, 5, 3, 5, 5);
-            GamerC gamerC = new GamerC(200, 5, 3, 5, 5);
+            GamerC gamerC = new GamerC(200, 5, 3, 5, 5,2);
             oyuncularListesi.Add(gamerA);
             oyuncularListesi.Add(gamerB);
             oyuncularListesi.Add(gamerC);
@@ -91,10 +91,18 @@ namespace Altın_Toplama_Oyunu
                 foreach (Gamer gamer in oyuncularListesi)
                 {
                     //Console.WriteLine("altinKonumari:" + acikAltinKonumlari.Count);
+                    if (gamer.altinMiktari < 1)
+                    {
+                        oyuncularListesi.Remove(gamer);
+                        Console.WriteLine("Oyuncu X elendi");
+                    }
                     gamer.hamleYap();
-                    Thread.Sleep(5000);
+                    Thread.Sleep(100);
                 }
             }
+            EndOfGameFrm endOfGameFrm = new EndOfGameFrm();
+            endOfGameFrm.SkorDegerleriniAta(oyuncularListesi);
+            endOfGameFrm.Show();
         }
 
 

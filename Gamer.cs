@@ -59,6 +59,7 @@ namespace Altın_Toplama_Oyunu
             atilabilirAdimMiktari -= shiftingAmountForY;
             altinMiktari -= hamleYapmaMaaliyeti;
             harcananAltinMiktari += hamleYapmaMaaliyeti;
+
             Console.WriteLine("Hedefe ilerlendi : " + anlikYer.X + "," + anlikYer.Y + " - " + hedeflenenYer.X + "," + hedeflenenYer.Y);
             int simdikiYerX = anlikYer.X;
             int simdikiYerY = anlikYer.Y;
@@ -69,16 +70,30 @@ namespace Altın_Toplama_Oyunu
                 var coordinateX = coordinate.X;
                 var coordinateY = coordinate.Y;
                // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
-                if ( ( ((gecmisYerX < coordinateX && coordinateX < simdikiYerX) ||
-                (gecmisYerX > coordinateX && coordinateX > simdikiYerX)) && gecmisYerY== coordinateY && simdikiYerY==coordinateY) ||
-                (((gecmisYerY < coordinateY && coordinateY < simdikiYerY) ||
-                (gecmisYerY > coordinateY && coordinateY > simdikiYerY)) && gecmisYerX == coordinateX && simdikiYerX == coordinateX))
+                if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY,coordinate))
                 {
                     gizliAltinListesi.Remove(coordinate);
                     acikAltinListesi.Add(coordinate);
                     StartGame.createBoard.gizliAltiniAcigaCikar(coordinate);
                 }
 
+            }
+            for (int i = 0; i < acikAltinListesi.Count; i++)
+            {
+                Coordinate coordinate = acikAltinListesi[i];
+                var coordinateX = coordinate.X;
+                var coordinateY = coordinate.Y;
+                // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
+                if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY, coordinate))
+                {
+                    altinMiktari += coordinate.AltınDegeri;
+                    toplananAltinMiktari = +coordinate.AltınDegeri;
+                    hedeflenenYer.AltınDegeri = 0;
+                    hedefBelirliMi = false;
+                    acikAltinListesi.Remove(coordinate); // hedeflenen deger altin listesinden cikarildi
+
+                    Console.WriteLine("uzerinden gecilen altin alindi.");
+                }
             }
             StartGame.createBoard.tahtadaVerilenKonumaGit(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY);
 
@@ -147,6 +162,44 @@ namespace Altın_Toplama_Oyunu
             acikAltinListesi.Remove(hedeflenenYer); // hedeflenen deger altin listesinden cikarildi
 
             Console.WriteLine("Hedefteki alindi");
+        }
+
+        public void enKarliAltiniAl()
+        {
+            double hesaplananUzaklik;
+            double maliyet;
+            double karTutari = 0;
+            Coordinate enKarliKordinat = null;
+            foreach (Coordinate kordinat in acikAltinListesi)
+            {
+                // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
+                hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
+                maliyet = (hesaplananUzaklik / adimMiktari) * hamleYapmaMaaliyeti;
+                if ((kordinat.AltınDegeri - Convert.ToInt32(maliyet)) > karTutari)
+                {
+                    karTutari = (kordinat.AltınDegeri - maliyet);
+                    enKarliKordinat = kordinat;
+                }
+
+            }
+            altinMiktari -= hedefBelirlemeMaaliyeti; // hedef belirleme maaliyeti sahip oldugumuz altindan dusuluyor. 
+            harcananAltinMiktari += hedefBelirlemeMaaliyeti;
+            hedeflenenYer = enKarliKordinat; // hedeflenen yer en yakin kordinat oluyor.
+            hedefBelirliMi = true;
+        }
+        private bool coordinatAraliktaMi(int gecmisYerX, int gecmisYerY, int simdikiYerX, int  simdikiYerY, Coordinate sorgulanan)
+        {
+           
+            var coordinateX = sorgulanan.X;
+            var coordinateY = sorgulanan.Y;
+            if ((((gecmisYerX < coordinateX && coordinateX < simdikiYerX) ||
+                (gecmisYerX > coordinateX && coordinateX > simdikiYerX)) && gecmisYerY == coordinateY && simdikiYerY == coordinateY) ||
+                (((gecmisYerY < coordinateY && coordinateY < simdikiYerY) ||
+                (gecmisYerY > coordinateY && coordinateY > simdikiYerY)) && gecmisYerX == coordinateX && simdikiYerX == coordinateX))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
