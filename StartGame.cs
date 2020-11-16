@@ -78,25 +78,27 @@ namespace Altın_Toplama_Oyunu
         }
         public void startCompetetion()
         {
-            GamerA gamerA = new GamerA(200, 5, 3, 5, 5);
+            GamerA gamerA = new GamerA(40, 5, 3, 5, 5);
             GamerB gamerB = new GamerB(200, 5, 3, 5, 5);
             GamerC gamerC = new GamerC(200, 5, 3, 5, 5,2);
             oyuncularListesi.Add(gamerA);
             oyuncularListesi.Add(gamerB);
             oyuncularListesi.Add(gamerC);
 
-            while (acikAltinKonumlari.Count > 0)
+            while (acikAltinKonumlari.Count > 0 && oyuncularListesi.Count>0)
             {
 
-                foreach (Gamer gamer in oyuncularListesi)
+                for (int i = 0; i < oyuncularListesi.Count; i++)
                 {
+                    Gamer gamer = oyuncularListesi[i];
+                    bool sonuc = gamer.hamleYap();
                     //Console.WriteLine("altinKonumari:" + acikAltinKonumlari.Count);
-                    if (gamer.altinMiktari < 1)
+                    if (sonuc==false)
                     {
                         oyuncularListesi.Remove(gamer);
-                        Console.WriteLine("Oyuncu X elendi");
+                        Console.WriteLine("Oyuncu "+gamer.oyuncuAdi+ " elendi");
                     }
-                    gamer.hamleYap();
+                    
                     Thread.Sleep(100);
                 }
             }
@@ -105,7 +107,7 @@ namespace Altın_Toplama_Oyunu
             endOfGameFrm.Show();
         }
 
-
+        
 
 
     }

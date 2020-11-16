@@ -18,12 +18,13 @@ namespace Altın_Toplama_Oyunu
             anlikYer = new Coordinate();
             anlikYer.Y = StartGame._boardY-1;
             anlikYer.X = StartGame._boardX - 1;
+            oyuncuAdi = "C";
         }
         public override void hedefBelirle()
         {
             gizliAltiniAcigaCikar(herHamledeAcilacakGA);
 
-            enKarliAltiniAl(); // en karli altini aliyoruz.
+            enKarliAltiniHedefle(); // en karli altini aliyoruz.
 
         }
         

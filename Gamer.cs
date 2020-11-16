@@ -46,6 +46,7 @@ namespace Altın_Toplama_Oyunu
 
         public void hedefeIlerle()
         {
+          
             int gecmisYerX = anlikYer.X;
             int gecmisYerY = anlikYer.Y;
 
@@ -111,6 +112,7 @@ namespace Altın_Toplama_Oyunu
             }
             else
             {
+                hedefBelirliMi = false;
                 hedefBelirle();
                 hedefeIlerle();
             }
@@ -119,31 +121,37 @@ namespace Altın_Toplama_Oyunu
 
 
         }
-        public void hamleYap()
+        public bool hamleYap()
         { // bir hamlede adimMiktari kadar hareket edilir. 
             atilabilirAdimMiktari = adimMiktari;
             var bulundugumKonum = anlikYer;
-            Console.WriteLine("Hamle basladi : " + bulundugumKonum.X + "," + bulundugumKonum.Y);
-            if (hedefBelirliMi == true && !hedefeVardiMi())
+            Console.WriteLine(oyuncuAdi+": Hamle basladi : " + bulundugumKonum.X + "," + bulundugumKonum.Y);
+            
+            if (hedefBelirliMi == true && !hedefeVardiMi() && altinMiktari>=hamleYapmaMaaliyeti)
             {
                 hedefeIlerle();
+                var vardigimYer = anlikYer;
+                Console.WriteLine(vardigimYer.X + "," + vardigimYer.Y + "\n\n");
+                return true;
             }
 
-            else
+            else if(hedefBelirliMi == false  && altinMiktari >= hedefBelirlemeMaaliyeti)
             {
 
                 hedefBelirle();
                 hedefeIlerle();
+                var vardigimYer = anlikYer;
+                Console.WriteLine(vardigimYer.X + "," + vardigimYer.Y + "\n\n");
+                return true;
             }
-            var vardigimYer = anlikYer;
-            Console.WriteLine(vardigimYer.X + "," + vardigimYer.Y + "\n\n");
 
+            return false;
 
         }
         public int uzaklikHesapla(Coordinate anlikKordinat, Coordinate adayHedefKordinat)
         {
             // bulundugu yer ile hesaplanacak kordinat arasindaki mesafeyi dondur
-            return Math.Abs((anlikKordinat.X + anlikKordinat.Y) - (adayHedefKordinat.X + adayHedefKordinat.Y));
+            return Math.Abs((anlikKordinat.X - adayHedefKordinat.X) ) +Math.Abs(anlikKordinat.Y - adayHedefKordinat.Y);
         }
         private bool hedefeVardiMi()
         {  //hedefe vardi ise true aksi halde false doner 
@@ -162,13 +170,15 @@ namespace Altın_Toplama_Oyunu
             acikAltinListesi.Remove(hedeflenenYer); // hedeflenen deger altin listesinden cikarildi
 
             Console.WriteLine("Hedefteki alindi");
+            Console.WriteLine("altin miktari : " + altinMiktari);
+            Console.WriteLine("toplananAltinMiktari: " + toplananAltinMiktari);
         }
 
-        public void enKarliAltiniAl()
+        public void enKarliAltiniHedefle()
         {
             double hesaplananUzaklik;
             double maliyet;
-            double karTutari = 0;
+            double karTutari = int.MinValue;
             Coordinate enKarliKordinat = null;
             foreach (Coordinate kordinat in acikAltinListesi)
             {

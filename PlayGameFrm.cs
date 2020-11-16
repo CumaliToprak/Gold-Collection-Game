@@ -166,8 +166,11 @@ namespace Altın_Toplama_Oyunu
             Console.WriteLine(anlikYerX);
             Console.WriteLine(gidilecekYerX);
            
+            if(label1.Text!="A" && label1.Text != "B" && label1.Text != "C" &&label1.Text != "D")
+            {
+                label1.Text = $"| |";
+            }
             
-            label1.Text = $"| |";
             label1.BackColor = clr3; // arka plan darkGray Oluyor.
             label2.Text = temp;
             label2.BackColor = tempBackColor;

@@ -15,11 +15,12 @@ namespace Altın_Toplama_Oyunu
             anlikYer = new Coordinate();
             anlikYer.X = StartGame._boardX-1;
             anlikYer.Y = 0;
+            oyuncuAdi = "B";
         }
 
         public override void hedefBelirle()
         {
-            enKarliAltiniAl();
+            enKarliAltiniHedefle();
             Console.WriteLine("Hedef Belirlendi : B oyuncusunun hedefi" + hedeflenenYer.X + "," + hedeflenenYer.Y);
 
         }

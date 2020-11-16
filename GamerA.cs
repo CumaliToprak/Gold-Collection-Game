@@ -15,7 +15,8 @@ namespace Altın_Toplama_Oyunu
             // A oyuncusunun baslangictaki yeri ataniyor.
             anlikYer = new Coordinate();
             anlikYer.X = 0;
-            anlikYer.Y = 0; 
+            anlikYer.Y = 0;
+            oyuncuAdi = "A";
         }
         //public override bool hedefeIlerle()
         //{
@@ -31,6 +32,10 @@ namespace Altın_Toplama_Oyunu
             int enYakinAltinMesafesi = int.MaxValue;
             int hesaplananUzaklik;
             Coordinate enYakinKordinat = null ; 
+            if (acikAltinListesi.Count == 0 )
+            {
+                Console.WriteLine("ALTIN LISTESI BOS");
+            }
             foreach (Coordinate kordinat in acikAltinListesi)
             {
                 // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
