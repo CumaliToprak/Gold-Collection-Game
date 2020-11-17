@@ -19,10 +19,10 @@ namespace Altın_Toplama_Oyunu
 
         public void SkorDegerleriniAta(List<Gamer> oyuncular)
         {
-            this.lblAdimA.Text = oyuncular[0].adimMiktari.ToString();
-            this.lblAdimB.Text = oyuncular[1].adimMiktari.ToString();
-            this.lblAdimC.Text = oyuncular[2].adimMiktari.ToString();
-            this.lblAdimD.Text = oyuncular[3].adimMiktari.ToString();
+            this.lblAdimA.Text = oyuncular[0].atilanToplamAdimSayisi.ToString();
+            this.lblAdimB.Text = oyuncular[1].atilanToplamAdimSayisi.ToString();
+            this.lblAdimC.Text = oyuncular[2].atilanToplamAdimSayisi.ToString();
+            this.lblAdimD.Text = oyuncular[3].atilanToplamAdimSayisi.ToString();
 
             this.lblHarcananA.Text = oyuncular[0].harcananAltinMiktari.ToString();
             this.lblHarcananB.Text = oyuncular[1].harcananAltinMiktari.ToString();

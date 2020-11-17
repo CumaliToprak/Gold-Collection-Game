@@ -16,14 +16,16 @@ namespace Altın_Toplama_Oyunu
         public Coordinate hedeflenenYer { set; get; }
         public Coordinate anlikYer { set; get; }
         public int seferMaaliyeti { set; get; }
-        public int adimMiktari { set; get; } // describes step amount for one time voyage 
+        public int adimMiktari { set; get; } // bir seferde Atilabilecek Adim Miktarini Belirler 
         public int hedefBelirlemeMaaliyeti { set; get; }
+        public int atilanToplamAdimSayisi { get; set; }
+        public int hamleYapmaMaaliyeti { set; get; }// hedefe ilerlerken harcanacak altin miktari 
         public string oyuncuAdi;
         public int toplananAltinMiktari;
         public int harcananAltinMiktari;
         public bool hedefBelirliMi { set; get; }
         private int atilabilirAdimMiktari;
-        public int hamleYapmaMaaliyeti { set; get; }// hedefe ilerlerken harcanacak altin miktari 
+
         public List<Coordinate> gizliAltinListesi;
         public List<Coordinate> acikAltinListesi;
         public Gamer(int altinMiktari, int seferMaaliyeti, int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti)
@@ -40,82 +42,94 @@ namespace Altın_Toplama_Oyunu
             acikAltinListesi = StartGame.acikAltinKonumlari;
 
             gizliAltinListesi = StartGame.gizliAltinKonumlari;
+            atilanToplamAdimSayisi = 0;
         }
 
         public abstract void hedefBelirle();
 
         public void hedefeIlerle()
         {
-          
-            int gecmisYerX = anlikYer.X;
-            int gecmisYerY = anlikYer.Y;
-
-            int calculatedValueX = Math.Abs(hedeflenenYer.X - anlikYer.X);
-            int calculatedValueY = Math.Abs(hedeflenenYer.Y - anlikYer.Y);
-            int shiftingAmountForX = calculatedValueX > atilabilirAdimMiktari ? atilabilirAdimMiktari : calculatedValueX;
-            atilabilirAdimMiktari -= shiftingAmountForX;
-            int shiftingAmountForY = calculatedValueY > atilabilirAdimMiktari ? atilabilirAdimMiktari : calculatedValueY;
-            anlikYer.Y += hedeflenenYer.Y > anlikYer.Y ? shiftingAmountForY : -shiftingAmountForY;
-            anlikYer.X += hedeflenenYer.X > anlikYer.X ? shiftingAmountForX : -shiftingAmountForX;
-            atilabilirAdimMiktari -= shiftingAmountForY;
-            altinMiktari -= hamleYapmaMaaliyeti;
-            harcananAltinMiktari += hamleYapmaMaaliyeti;
-
-            Console.WriteLine("Hedefe ilerlendi : " + anlikYer.X + "," + anlikYer.Y + " - " + hedeflenenYer.X + "," + hedeflenenYer.Y);
-            int simdikiYerX = anlikYer.X;
-            int simdikiYerY = anlikYer.Y;
-
-            for (int i = 0; i < gizliAltinListesi.Count; i++)
-            {
-                Coordinate coordinate = gizliAltinListesi[i];
-                var coordinateX = coordinate.X;
-                var coordinateY = coordinate.Y;
-                // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
-                if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY, coordinate))
-                {
-                    gizliAltinListesi.Remove(coordinate);
-                    acikAltinListesi.Add(coordinate);
-                    StartGame.createBoard.gizliAltiniAcigaCikar(coordinate);
-                }
-
-            }
-            for (int i = 0; i < acikAltinListesi.Count; i++)
-            {
-                Coordinate coordinate = acikAltinListesi[i];
-                var coordinateX = coordinate.X;
-                var coordinateY = coordinate.Y;
-                // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
-                if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY, coordinate))
-                {
-                    altinMiktari += coordinate.AltınDegeri;
-                    toplananAltinMiktari = +coordinate.AltınDegeri;
-                    hedeflenenYer.AltınDegeri = 0;
-                    hedefBelirliMi = false;
-                    acikAltinListesi.Remove(coordinate); // hedeflenen deger altin listesinden cikarildi
-
-                    Console.WriteLine("uzerinden gecilen altin alindi.");
-                }
-            }
-            StartGame.createBoard.tahtadaVerilenKonumaGit(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY);
 
             if (hedeflenenYerdeAltinVarMi())
             {
+               
+
+                int gecmisYerX = anlikYer.X;
+                int gecmisYerY = anlikYer.Y;
+                StartGame.createBoard.gecmisKonumuTemizle(gecmisYerX, gecmisYerY); // gecmis yerdeki konum siliniyor
+
+                int calculatedValueX = Math.Abs(hedeflenenYer.X - anlikYer.X);
+                int calculatedValueY = Math.Abs(hedeflenenYer.Y - anlikYer.Y);
+                int shiftingAmountForX = calculatedValueX > atilabilirAdimMiktari ? atilabilirAdimMiktari : calculatedValueX;
+                atilabilirAdimMiktari -= shiftingAmountForX;
+                int shiftingAmountForY = calculatedValueY > atilabilirAdimMiktari ? atilabilirAdimMiktari : calculatedValueY;
+                anlikYer.Y += hedeflenenYer.Y > anlikYer.Y ? shiftingAmountForY : -shiftingAmountForY;
+                anlikYer.X += hedeflenenYer.X > anlikYer.X ? shiftingAmountForX : -shiftingAmountForX;
+                atilabilirAdimMiktari -= shiftingAmountForY;
+                altinMiktari -= hamleYapmaMaaliyeti;
+                harcananAltinMiktari += hamleYapmaMaaliyeti;
+                atilanToplamAdimSayisi += shiftingAmountForX + shiftingAmountForY;
+
+                Console.WriteLine("Hedefe ilerlendi : " + anlikYer.X + "," + anlikYer.Y + " - " + hedeflenenYer.X + "," + hedeflenenYer.Y);
+                int simdikiYerX = anlikYer.X;
+                int simdikiYerY = anlikYer.Y;
+                StartGame.createBoard.oyuncularinKonumunuYenile(); // gecmis yerdeki konum siliniyor
+
+                for (int i = 0; i < gizliAltinListesi.Count; i++)
+                {
+                    Coordinate coordinate = gizliAltinListesi[i];
+                    var coordinateX = coordinate.X;
+                    var coordinateY = coordinate.Y;
+                    // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
+                    if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY, coordinate))
+                    {
+                        gizliAltinListesi.Remove(coordinate);
+                        acikAltinListesi.Add(coordinate);
+                        StartGame.createBoard.gizliAltiniAcigaCikar(coordinate);
+                    }
+
+                }
+                for (int i = 0; i < acikAltinListesi.Count; i++)
+                {
+                    Coordinate coordinate = acikAltinListesi[i];
+                    var coordinateX = coordinate.X;
+                    var coordinateY = coordinate.Y;
+                    // eger gizli altin gecmis ve simdiki konumlar arasinda ise gerceklestir.
+                    if (coordinatAraliktaMi(gecmisYerX, gecmisYerY, simdikiYerX, simdikiYerY, coordinate))
+                    {
+                        altinMiktari += coordinate.AltınDegeri;
+                        toplananAltinMiktari = +coordinate.AltınDegeri;
+                        hedeflenenYer.AltınDegeri = 0;
+                        hedefBelirliMi = false;
+                        acikAltinListesi.Remove(coordinate); // hedeflenen deger altin listesinden cikarildi
+
+                        Console.WriteLine("uzerinden gecilen altin alindi.");
+                    }
+                }
                 if (hedefeVardiMi())
                 {
                     hedeftekiAltiniAl();
                 }
+
                 //if(atilabilirAdimMiktari > 0 && acikAltinListesi.Count > 0) // eger atabilecegi adim sayi kalmissa hedef belirler ve hedefe ilerler.
                 //{
                 //     hedefBelirle();
                 //   hedefeIlerle();
-                // }
+                // }\
+
             }
             else
             {
                 hedefBelirliMi = false;
                 hedefBelirle();
                 hedefeIlerle();
+
             }
+
+
+
+
+
 
 
 
@@ -125,9 +139,9 @@ namespace Altın_Toplama_Oyunu
         { // bir hamlede adimMiktari kadar hareket edilir. 
             atilabilirAdimMiktari = adimMiktari;
             var bulundugumKonum = anlikYer;
-            Console.WriteLine(oyuncuAdi+": Hamle basladi : " + bulundugumKonum.X + "," + bulundugumKonum.Y);
-            
-            if (hedefBelirliMi == true && !hedefeVardiMi() && altinMiktari>=hamleYapmaMaaliyeti)
+            Console.WriteLine(oyuncuAdi + ": Hamle basladi : " + bulundugumKonum.X + "," + bulundugumKonum.Y);
+
+            if (hedefBelirliMi == true && !hedefeVardiMi() && altinMiktari >= hamleYapmaMaaliyeti)
             {
                 hedefeIlerle();
                 var vardigimYer = anlikYer;
@@ -135,7 +149,7 @@ namespace Altın_Toplama_Oyunu
                 return true;
             }
 
-            else if(hedefBelirliMi == false  && altinMiktari >= hedefBelirlemeMaaliyeti)
+            else if (hedefBelirliMi == false && altinMiktari >= hedefBelirlemeMaaliyeti)
             {
 
                 hedefBelirle();
@@ -151,7 +165,7 @@ namespace Altın_Toplama_Oyunu
         public int uzaklikHesapla(Coordinate anlikKordinat, Coordinate adayHedefKordinat)
         {
             // bulundugu yer ile hesaplanacak kordinat arasindaki mesafeyi dondur
-            return Math.Abs((anlikKordinat.X - adayHedefKordinat.X) ) +Math.Abs(anlikKordinat.Y - adayHedefKordinat.Y);
+            return Math.Abs((anlikKordinat.X - adayHedefKordinat.X)) + Math.Abs(anlikKordinat.Y - adayHedefKordinat.Y);
         }
         private bool hedefeVardiMi()
         {  //hedefe vardi ise true aksi halde false doner 

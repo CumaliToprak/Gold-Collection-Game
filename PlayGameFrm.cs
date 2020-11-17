@@ -15,12 +15,16 @@ namespace Altın_Toplama_Oyunu
     {
         readonly int _boardX, _boardY;
         readonly int X, Y;
-         Label[,] _boardLabels;
+        Label[,] _boardLabels;
         List<Coordinate> _acikAltinKonumlari;
         List<Coordinate> _gizliAltinKonumlari;
-         Color clr1 = Color.Gold;
-         Color  clr2 = Color.Red;
-         Color clr3 = Color.DarkGray;
+        Color clr1 = Color.Gold;
+        Color clr2 = Color.Red;
+        Color clr3 = Color.DarkGray;
+        GamerA gamerA;
+        GamerB gamerB;
+        GamerC gamerC;
+        GamerD gamerD;
         private void CreateGameBoardFrm_Load(object sender, EventArgs e)
         {
 
@@ -34,6 +38,11 @@ namespace Altın_Toplama_Oyunu
             Y = (40 - boardY) * 10; //Game Board form boyutuna göre ne kadar aşağıdan konumlanmaya başlamalı
             _acikAltinKonumlari = acikAltinKonumlari;
             _gizliAltinKonumlari = gizliAltinKonumlari;
+            gamerA = StartGame.gamerA;
+            gamerB = StartGame.gamerB;
+            gamerC = StartGame.gamerC;
+            gamerD = StartGame.gamerD;
+
         }
 
 
@@ -141,7 +150,7 @@ namespace Altın_Toplama_Oyunu
                             _boardLabels[altin.X, altin.Y].Text = altinDegeri.ToString();
                         }
                     }
-                   
+
                 }
             }
 
@@ -156,42 +165,46 @@ namespace Altın_Toplama_Oyunu
 
         }
 
-        public void tahtadaVerilenKonumaGit(int  anlikYerX, int anlikYerY,int gidilecekYerX, int gidilecekYerY)
+        public void oyuncularinKonumunuYenile()
         {
-            // anlik yerden gidilecek yere stringi tasir.
-            string temp = _boardLabels[anlikYerX, anlikYerY].Text;
-            Color tempBackColor = _boardLabels[anlikYerX, anlikYerY].BackColor;
-            Label label1 = _boardLabels[anlikYerX, anlikYerY];
-            Label label2 = _boardLabels[gidilecekYerX, gidilecekYerY];
-            Console.WriteLine(anlikYerX);
-            Console.WriteLine(gidilecekYerX);
-           
-            if(label1.Text!="A" && label1.Text != "B" && label1.Text != "C" &&label1.Text != "D")
-            {
-                label1.Text = $"| |";
-            }
             
-            label1.BackColor = clr3; // arka plan darkGray Oluyor.
-            label2.Text = temp;
-            label2.BackColor = tempBackColor;
-            Controls.Add(label1);
-            Controls.Add(label2);
-           
-            Show(); 
+            _boardLabels[gamerA.anlikYer.X, gamerA.anlikYer.Y].Text = "A ";
+            _boardLabels[gamerA.anlikYer.X, gamerA.anlikYer.Y].BackColor = Color.LightGreen; 
+            _boardLabels[gamerA.anlikYer.X, gamerA.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
+            _boardLabels[gamerB.anlikYer.X, gamerB.anlikYer.Y].Text = "B ";
+            _boardLabels[gamerB.anlikYer.X, gamerB.anlikYer.Y].BackColor= Color.LightBlue; 
+            _boardLabels[gamerB.anlikYer.X, gamerB.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
+            _boardLabels[gamerC.anlikYer.X, gamerC.anlikYer.Y].Text = "C ";
+            _boardLabels[gamerC.anlikYer.X, gamerC.anlikYer.Y].BackColor = Color.LightPink; 
+            _boardLabels[gamerC.anlikYer.X, gamerC.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
+            _boardLabels[gamerD.anlikYer.X, gamerD.anlikYer.Y].Text = "D ";
+            _boardLabels[gamerD.anlikYer.X, gamerD.anlikYer.Y].BackColor=Color.DarkOrange;
+            _boardLabels[gamerD.anlikYer.X, gamerD.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
+
+
+            Show();
             this.Refresh();// ekran yenileniyor...
 
 
         }
+        public void gecmisKonumuTemizle(int x, int y )
+        {
+            Label label = _boardLabels[x, y];
+            label.Text = $"| |";
+            label.BackColor = clr3; // arka plan darkGray Oluyor.
+            Show();
+            this.Refresh();// ekran yenileniyor...
+        }
         public void gizliAltiniAcigaCikar(Coordinate kordinat)
         {
-            int X  =kordinat.X;
+            int X = kordinat.X;
             int Y = kordinat.Y;
             Label label = _boardLabels[X, Y];
             label.Text = kordinat.AltınDegeri.ToString();
             label.BackColor = clr1;
 
             Controls.Add(label);
-           
+
 
             Show();
             this.Refresh();// ekran yenileniyor...
