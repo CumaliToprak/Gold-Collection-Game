@@ -8,8 +8,8 @@ namespace Altın_Toplama_Oyunu
 {
     class GamerB : Gamer
     {
-        public GamerB(int altinMiktari, int seferMaaliyeti, int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti)
-            : base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
+        public GamerB(int altinMiktari,  int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti)
+            : base(altinMiktari,  adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
         {
             // C oyuncusunun baslangictaki yeri ataniyor.
             anlikYer = new Coordinate();

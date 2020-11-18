@@ -8,15 +8,17 @@ namespace Altın_Toplama_Oyunu
 {
     class GamerD : Gamer
     {
-        public GamerD(int altinMiktari, int seferMaaliyeti,
+        List<Gamer> oyuncular;
+        public GamerD(int altinMiktari, 
             int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti) :
-            base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
+            base(altinMiktari,  adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
         {
             // C oyuncusunun baslangictaki yeri ataniyor.
             anlikYer = new Coordinate();
             anlikYer.Y = StartGame._boardY - 1;
             anlikYer.X = 0;
             oyuncuAdi = "D";
+            oyuncular = StartGame.oyuncularListesi;
         }
         public override void hedefBelirle()
         {
@@ -24,62 +26,92 @@ namespace Altın_Toplama_Oyunu
             double maliyet;
             double karTutari = int.MinValue;
             Coordinate enKarliKordinat = null;
-            //diğer oyuncuların hedeflerine onlardan önce ulaşabiliryor mu diye kontrol edecek
-            List<Gamer> oyuncular = StartGame.oyuncularListesi;
             bool dahaOnceUlasirMi = false;
             List<Coordinate> hedefler = new List<Coordinate>();
+            Stack<Coordinate> enKarliKordinatStack = new Stack<Coordinate>();
 
-            foreach (var oyuncu in oyuncular)
+            //diğer oyuncuların hedeflerine onlardan önce ulaşabiliryor mu diye kontrol edecek
+
+
+
+            if (oyuncular.Count == 1)
             {
-                if (oyuncu.hedefBelirliMi)
-                {
-                    hesaplananUzaklik = uzaklikHesapla(oyuncu.anlikYer, oyuncu.hedeflenenYer);
+                enKarliAltiniHedefle();
 
-                    if (uzaklikHesapla(anlikYer, oyuncu.hedeflenenYer) < hesaplananUzaklik)
-                    {
-                        enYakinKordinat = oyuncu.hedeflenenYer;
-                        dahaOnceUlasirMi = true;
-                    }
-                }
-                hedefler.Add(oyuncu.hedeflenenYer);
             }
-
-
-            if (!dahaOnceUlasirMi)
+            else
             {
+                Console.WriteLine("calsiti");
+
+
                 foreach (Coordinate kordinat in acikAltinListesi)
                 {
-                    //oyuncuların hedeflerine onlardan önce ulaşamıyorsa bu hedefleri hariç tutar.
-                    if (!hedefler.Contains(kordinat))
+                    // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
+                    hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
+                    maliyet = (hesaplananUzaklik / adimMiktari) * hamleYapmaMaaliyeti;
+                    if ((kordinat.AltınDegeri - Convert.ToInt32(maliyet)) > karTutari)
                     {
+                        karTutari = (kordinat.AltınDegeri - maliyet);
 
-                        // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
-                        hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
-                        maliyet = (hesaplananUzaklik / adimMiktari) * hamleYapmaMaaliyeti;
-                        if ((kordinat.AltınDegeri - Convert.ToInt32(maliyet)) > karTutari)
-                        {
-                            karTutari = (kordinat.AltınDegeri - maliyet);
-                            enKarliKordinat = kordinat;
-                        }
-
-
-                        // oyuncunun bulundugu yer ile aday yer arasindaki uzaklik
-                        hesaplananUzaklik = uzaklikHesapla(anlikYer, kordinat);
-                        // her seferde en yakin kordinata ulasiliyor.
-
+                        enKarliKordinatStack.Push(kordinat); // coordinatlar stack e atiliyor.
+                       
                     }
 
                 }
+
+
+                while (enKarliKordinat == null)
+                {
+                   
+                    
+
+                    for (int i = 0; i < oyuncular.Count; i++)
+                    {
+                        var oyuncuKordinati = oyuncular[i].hedeflenenYer;
+                        if ( oyuncuKordinati != null && enKarliKordinat != null && enKarliKordinat.Equals(oyuncuKordinati) && oyuncular[i].oyuncuAdi != oyuncuAdi  )
+                        {
+                            Console.WriteLine("D oyuncusunun en karli hedefi " + oyuncular[i].oyuncuAdi + " ile cakisti .Hangisi daha once varacak kontrol edilecek");
+
+                            if (!dOyuncusuOnceVarirMi(enKarliKordinat, oyuncular[i]))
+                            {
+
+                                enKarliKordinat = null;
+                                if(enKarliKordinatStack.Count == 0)
+                                {
+                                    StartGame.oyuncularListesi.Remove(StartGame.gamerD); // d oyuncusu elenecek
+                                    Console.WriteLine("D oyuncusu kalan altini alamayacagi icin elendi");
+                                }
+                            }
+                        }
+                    }
+                    enKarliKordinat = enKarliKordinatStack.Pop();
+
+
+                }
+
+                altinMiktari -= hedefBelirlemeMaaliyeti; // hedef belirleme maaliyeti sahip oldugumuz altindan dusuluyor. 
+                harcananAltinMiktari += hedefBelirlemeMaaliyeti;
+
+
+                hedeflenenYer = enKarliKordinat; // hedeflenen yer en yakin kordinat oluyor.
+                hedefBelirliMi = true;
+
             }
-
-            altinMiktari -= hedefBelirlemeMaaliyeti; // hedef belirleme maaliyeti sahip oldugumuz altindan dusuluyor. 
-            harcananAltinMiktari += hedefBelirlemeMaaliyeti;
+            Console.WriteLine("Hedef Belirlendi : D oyuncusunun hedefi" + hedeflenenYer.X + "," + hedeflenenYer.Y);
 
 
-            hedeflenenYer = enKarliKordinat; // hedeflenen yer en yakin kordinat oluyor.
-            hedefBelirliMi = true;
 
 
+        }
+        private bool dOyuncusuOnceVarirMi(Coordinate hedeflenenYer, Gamer oyuncu)
+        {
+            int hedeflenenYereUzaklik = uzaklikHesapla(anlikYer, hedeflenenYer);
+            int oyuncununHedeflenenYereUzakligi = uzaklikHesapla(oyuncu.anlikYer, oyuncu.hedeflenenYer);
+            int hamleSayisi = hedeflenenYereUzaklik / adimMiktari; // adim miktari bir hamlede atacak adim
+            int oyuncuHamleSayisi = oyuncununHedeflenenYereUzakligi / oyuncu.adimMiktari;
+            if (hamleSayisi < oyuncuHamleSayisi)
+                return true;
+            return false;
 
         }
 

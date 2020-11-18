@@ -31,7 +31,7 @@ namespace Altın_Toplama_Oyunu
             _altinOrani = altinOrani;
             _gizliAltinOrani = gizliAltinOrani;
             oyuncularListesi = new List<Gamer>();
-           
+
         }
 
         internal void createGameBoard()
@@ -43,10 +43,21 @@ namespace Altın_Toplama_Oyunu
 
             gizliAltinKonumlari = altinKonumlariniBelirle(gizliAltinSayisi, false);
             acikAltinKonumlari = altinKonumlariniBelirle(acikAltinSayisi, true);
-            gamerA = new GamerA(40, 5, 3, 5, 5);
-            gamerB = new GamerB(200, 5, 3, 5, 5);
-            gamerC = new GamerC(200, 5, 3, 5, 5, 2);
-            gamerD = new GamerD(200, 5, 3, 5, 5);
+            int hedefBelirlemeMaaliyetiA = MainFrm.hedefBelirlemeMaaliyetiA;
+            int hedefBelirlemeMaaliyetiB = MainFrm.hedefBelirlemeMaaliyetiB;
+            int hedefBelirlemeMaaliyetiC = MainFrm.hedefBelirlemeMaaliyetiC;
+            int hedefBelirlemeMaaliyetiD = MainFrm.hedefBelirlemeMaaliyetiD;
+            int hamleYapmaMaaliyetiA = MainFrm.hamleYapmaMaaliyetiA;
+            int hamleYapmaMaaliyetiB = MainFrm.hamleYapmaMaaliyetiB;
+            int hamleYapmaMaaliyetiC = MainFrm.hamleYapmaMaaliyetiC;
+            int hamleYapmaMaaliyetiD = MainFrm.hamleYapmaMaaliyetiD;
+            int adimSayisi = MainFrm.adımSayisi;
+            int oyuncuAltinSayisi = MainFrm.oyuncuAltinSayisi;
+            int acilacakGizliAltinMiktari = 2;
+            gamerA = new GamerA(oyuncuAltinSayisi, adimSayisi, hedefBelirlemeMaaliyetiA, hamleYapmaMaaliyetiA);
+            gamerB = new GamerB(oyuncuAltinSayisi, adimSayisi, hedefBelirlemeMaaliyetiB, hamleYapmaMaaliyetiB);
+            gamerC = new GamerC(oyuncuAltinSayisi, adimSayisi, hedefBelirlemeMaaliyetiC ,hamleYapmaMaaliyetiC, acilacakGizliAltinMiktari );
+            gamerD = new GamerD(oyuncuAltinSayisi, adimSayisi, hedefBelirlemeMaaliyetiD,hamleYapmaMaaliyetiD);
 
             oyuncularListesi.Add(gamerA);
             oyuncularListesi.Add(gamerB);
@@ -101,7 +112,7 @@ namespace Altın_Toplama_Oyunu
         }
         public void startCompetetion()
         {
-            
+
             while (acikAltinKonumlari.Count > 0 && oyuncularListesi.Count > 0)
             {
 
@@ -113,12 +124,16 @@ namespace Altın_Toplama_Oyunu
                     if (sonuc == false)
                     {
                         oyuncularListesi.Remove(gamer);
+                        createBoard.oyuncuyuEle(gamer);
                         Console.WriteLine("Oyuncu " + gamer.oyuncuAdi + " elendi");
                     }
 
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                 }
+                Console.WriteLine("AltinSayisi : " + acikAltinKonumlari.Count);
             }
+
+            Thread.Sleep(2000);
             EndOfGameFrm endOfGameFrm = new EndOfGameFrm();
             endOfGameFrm.SkorDegerleriniAta(sabitOyuncuListesi);
             endOfGameFrm.Show();

@@ -9,9 +9,9 @@ namespace Altın_Toplama_Oyunu
     class GamerC : Gamer
     {
         private int herHamledeAcilacakGA;
-        public GamerC(int altinMiktari, int seferMaaliyeti,
+        public GamerC(int altinMiktari, 
             int adimMiktari, int hedefBelirlemeMaaliyeti, int hamleYapmaMaaliyeti,int herHamledeAcilacakGA) :
-            base(altinMiktari, seferMaaliyeti, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
+            base(altinMiktari, adimMiktari, hedefBelirlemeMaaliyeti, hamleYapmaMaaliyeti)
         {
             // C oyuncusunun baslangictaki yeri ataniyor.
             this.herHamledeAcilacakGA = herHamledeAcilacakGA;

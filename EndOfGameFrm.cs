@@ -34,10 +34,10 @@ namespace Altın_Toplama_Oyunu
             this.lblToplananC.Text = oyuncular[2].toplananAltinMiktari.ToString();
             this.lblToplananD.Text = oyuncular[3].toplananAltinMiktari.ToString();
 
-            this.lblKasadakiA.Text = oyuncular[0].toplananAltinMiktari.ToString();
-            this.lblKasadakiB.Text = oyuncular[1].toplananAltinMiktari.ToString();
-            this.lblKasadakiC.Text = oyuncular[2].toplananAltinMiktari.ToString();
-            this.lblKasadakiD.Text = oyuncular[3].toplananAltinMiktari.ToString();
+            this.lblKasadakiA.Text = oyuncular[0].altinMiktari.ToString();
+            this.lblKasadakiB.Text = oyuncular[1].altinMiktari.ToString();
+            this.lblKasadakiC.Text = oyuncular[2].altinMiktari.ToString();
+            this.lblKasadakiD.Text = oyuncular[3].altinMiktari.ToString();
 
 
         }

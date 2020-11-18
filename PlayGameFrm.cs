@@ -21,6 +21,7 @@ namespace Altın_Toplama_Oyunu
         Color clr1 = Color.Gold;
         Color clr2 = Color.Red;
         Color clr3 = Color.DarkGray;
+        List<Gamer> oyuncularListesi;
         GamerA gamerA;
         GamerB gamerB;
         GamerC gamerC;
@@ -38,6 +39,7 @@ namespace Altın_Toplama_Oyunu
             Y = (40 - boardY) * 10; //Game Board form boyutuna göre ne kadar aşağıdan konumlanmaya başlamalı
             _acikAltinKonumlari = acikAltinKonumlari;
             _gizliAltinKonumlari = gizliAltinKonumlari;
+            oyuncularListesi = StartGame.oyuncularListesi;
             gamerA = StartGame.gamerA;
             gamerB = StartGame.gamerB;
             gamerC = StartGame.gamerC;
@@ -167,32 +169,58 @@ namespace Altın_Toplama_Oyunu
 
         public void oyuncularinKonumunuYenile()
         {
-            
-            _boardLabels[gamerA.anlikYer.X, gamerA.anlikYer.Y].Text = "A ";
-            _boardLabels[gamerA.anlikYer.X, gamerA.anlikYer.Y].BackColor = Color.LightGreen; 
-            _boardLabels[gamerA.anlikYer.X, gamerA.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
-            _boardLabels[gamerB.anlikYer.X, gamerB.anlikYer.Y].Text = "B ";
-            _boardLabels[gamerB.anlikYer.X, gamerB.anlikYer.Y].BackColor= Color.LightBlue; 
-            _boardLabels[gamerB.anlikYer.X, gamerB.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
-            _boardLabels[gamerC.anlikYer.X, gamerC.anlikYer.Y].Text = "C ";
-            _boardLabels[gamerC.anlikYer.X, gamerC.anlikYer.Y].BackColor = Color.LightPink; 
-            _boardLabels[gamerC.anlikYer.X, gamerC.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
-            _boardLabels[gamerD.anlikYer.X, gamerD.anlikYer.Y].Text = "D ";
-            _boardLabels[gamerD.anlikYer.X, gamerD.anlikYer.Y].BackColor=Color.DarkOrange;
-            _boardLabels[gamerD.anlikYer.X, gamerD.anlikYer.Y].Font = new Font("Arial", 8, FontStyle.Bold);
+            foreach (Gamer gamer in oyuncularListesi)
+            {
+                var label = _boardLabels[gamer.anlikYer.X, gamer.anlikYer.Y];               
+                label.Font = new Font("Arial", 8, FontStyle.Bold);
+                label.Text = gamer.oyuncuAdi + " ";
+                switch (gamer.oyuncuAdi)
+                {
+                    case "A":
+                        {
+                            label.BackColor = Color.LightGreen;
+                            break;
+                        }
+                    case "B":
+                        {
+                            label.BackColor = Color.LightBlue;
+                            
+                            break;
+                        }
+                    case "C":
+                        {
+                            label.BackColor = Color.LightPink;
 
+                            break;
+                        }
+                    case "D":
+                        {
+                            label.BackColor = Color.DarkOrange;
 
-            Show();
+                            break;
+                        }
+
+                }
+            }
+
+           // Show();
             this.Refresh();// ekran yenileniyor...
 
 
         }
-        public void gecmisKonumuTemizle(int x, int y )
+        public void gecmisKonumuTemizle(int x, int y)
         {
             Label label = _boardLabels[x, y];
-            label.Text = $"| |";
+            label.Text = $"|  |";
+            label.Font = new Font("Arial", 8, FontStyle.Regular);
             label.BackColor = clr3; // arka plan darkGray Oluyor.
-            Show();
+          //  Show();
+            this.Refresh();// ekran yenileniyor...
+        }
+        public void oyuncuyuEle(Gamer gamer)
+        {
+            _boardLabels[gamer.anlikYer.X, gamer.anlikYer.Y].BackColor = Color.Transparent;
+           // Show();
             this.Refresh();// ekran yenileniyor...
         }
         public void gizliAltiniAcigaCikar(Coordinate kordinat)
@@ -206,7 +234,7 @@ namespace Altın_Toplama_Oyunu
             Controls.Add(label);
 
 
-            Show();
+           // Show();
             this.Refresh();// ekran yenileniyor...
 
 
